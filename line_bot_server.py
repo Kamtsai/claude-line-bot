@@ -27,3 +27,5 @@ def setup_line_bot(app):
             event.reply_token,
             TextSendMessage(text=claude_response)
         )
+
+# 可以添加更多处理不同类型消息的函数
