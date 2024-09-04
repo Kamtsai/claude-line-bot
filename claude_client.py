@@ -7,7 +7,7 @@ from config import CLAUDE_API_KEY
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # 初始化Claude客户端
-claude = Anthropic(api_key=CLAUDE_API_KEY)
+client = Anthropic(api_key=CLAUDE_API_KEY)
 
 def get_claude_response(user_message, max_retries=3):
     """
@@ -20,14 +20,14 @@ def get_claude_response(user_message, max_retries=3):
     for attempt in range(max_retries):
         try:
             logging.info(f"Sending request to Claude API (Attempt {attempt + 1}): {user_message}")
-            response = claude.completions.create(
+            message = client.messages.create(
                 model="claude-3-opus-20240229",
-                max_tokens_to_sample=1000,
+                max_tokens=1000,
                 messages=[
                     {"role": "user", "content": user_message}
                 ]
             )
-            claude_response = response.content[0].text
+            claude_response = message.content[0].text
             logging.info(f"Received response from Claude API: {claude_response}")
             return claude_response
 
